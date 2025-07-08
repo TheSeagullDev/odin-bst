@@ -117,6 +117,68 @@ class Tree {
 		}
 		return null;
 	}
+
+	levelOrder(callback) {
+		if(callback == undefined) {
+			throw new Error("Callback function must be provided for tree traversal");
+		}
+		else {
+			const queue = [this.root];
+			while (queue.length > 0) {
+				let currentNode = queue.shift();
+				if(currentNode.left) {
+					queue.push(currentNode.left);
+				}
+				if(currentNode.right) {
+					queue.push(currentNode.right);
+				}
+				callback(currentNode.data);
+			}
+		}
+		
+	}
+
+	preOrder(callback, node=this.root) {
+		if(callback == undefined) {
+			throw new Error("Callback function must be provided for tree traversal");
+		}
+		if(node == null) {
+			return;
+		}
+		else {
+			callback(node.data);
+			this.preOrder(callback, node.left);
+			this.preOrder(callback, node.right);
+		}
+	}
+
+	inOrder(callback, node=this.root) {
+		if(callback == undefined) {
+			throw new Error("Callback function must be provided for tree traversal");
+		}
+		if(node == null) {
+			return;
+		}
+		else {
+			this.inOrder(callback, node.left);
+			callback(node.data);
+			this.inOrder(callback, node.right);
+		}
+	}
+
+	postOrder(callback, node=this.root) {
+		if(callback == undefined) {
+			throw new Error("Callback function must be provided for tree traversal");
+		}
+		if(node == null) {
+			return;
+		}
+		else {
+			this.postOrder(callback, node.left);
+			this.postOrder(callback, node.right);
+			callback(node.data);
+		}
+	}
 }
 
 class Node {
@@ -141,3 +203,5 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
 };
 
 const t = new Tree([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+prettyPrint(t.root);
