@@ -1,4 +1,4 @@
-class Tree {
+export default class Tree {
   constructor(array) {
     this.array = array;
     this.root = this.buildTree(this.array);
@@ -232,7 +232,7 @@ class Tree {
   rebalance() {
 	let arr = [];
 	this.inOrder((value) => arr.push(value));
-	this.buildTree(arr);
+	this.root = this.buildTree(arr);
   }
 }
 
@@ -244,27 +244,4 @@ class Node {
   }
 }
 
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null) {
-    return;
-  }
-  if (node.right !== null) {
-    prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  }
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  if (node.left !== null) {
-    prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-  }
-};
 
-function randArr(max, length) {
-	const arr = [];
-	for(let i = 0; i < length; i++) {
-		arr.push(Math.floor(Math.random() * (max + 1)));
-	}
-	return arr;
-}
-
-const t = new Tree(randArr(100, 7));
-
-prettyPrint(t.root);
